@@ -1,5 +1,8 @@
 package PacMan;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -11,6 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javafx.scene.input.*;
+import javafx.util.Duration;
+
+import java.util.concurrent.TimeUnit;
 
 public class Main extends Application implements Commons{
 
@@ -35,40 +41,28 @@ public class Main extends Application implements Commons{
 
         snake = new Snake();
         objects.add(snake);
+
+        scene.setOnKeyPressed((KeyEvent event) -> {
+            if (event.getCode() == KeyCode.LEFT) {
+                snake.head.direction = Direction.WEST;
+            }else if (event.getCode() == KeyCode.RIGHT) {
+                snake.head.direction = Direction.EAST;
+            }else if (event.getCode() == KeyCode.UP) {
+                snake.head.direction = Direction.NORTH;
+            }else if (event.getCode() == KeyCode.DOWN) {
+                snake.head.direction = Direction.SOUTH;
+            }
+        });
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), ae -> animation()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
         primaryStage.show();
-
-        long beforeTime, timeDiff, sleep;
-
-        beforeTime = System.currentTimeMillis();
-        ingame = true;
-
-        while(!quit){
-            if (!pause) {
-                animation();
-                primaryStage.show();
-            }
-
-            timeDiff = System.currentTimeMillis() - beforeTime;
-            sleep = DELAY - timeDiff;
-
-            if (sleep < 0) {
-                sleep = 2;
-            }
-
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                System.out.println("interrupted");
-            }
-
-            beforeTime = System.currentTimeMillis();
-
-        }
 
     }
 
     public void animation(){
-
+        snake.act();
     }
 
 //    @Override

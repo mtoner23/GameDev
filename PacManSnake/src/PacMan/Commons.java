@@ -1,9 +1,9 @@
 package PacMan;
 
 public interface Commons {
-    public static final int GRID_SIZE = 10;
-    public static final int BOARD_WIDTH = 50;
-    public static final int BOARD_HEIGHT = 50;
+    int GRID_SIZE = 10;
+    int BOARD_WIDTH = 20;
+    int BOARD_HEIGHT = 50;
     int BORDER_RIGHT = 0;
     int BORDER_LEFT = 0;
     int CHANCE = 5;
@@ -12,7 +12,7 @@ public interface Commons {
     int PLAYER_HEIGHT = 16;
     int SPIDER_WIDTH = 30;
     int SPIDER_HEIGHT = 12;
-    int INIT_LENGTH = 4;
+    int INIT_LENGTH = 6;
     int SEGMENT_HEIGHT = GRID_SIZE;
     int SEGMENT_WIDTH = GRID_SIZE;
     int SHOT_SPEED = 9;
