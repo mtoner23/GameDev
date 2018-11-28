@@ -61,21 +61,21 @@ public class Main extends Application implements Commons{
                 }
             }else if (event.getCode() == KeyCode.RIGHT) {
                 if(game) {
-                    snake.head.direction = Direction.WEST;
+                    snake.head.direction = Direction.EAST;
                 }else{
-                    player.direction = Direction.WEST;
+                    player.direction = Direction.EAST;
                 }
             }else if (event.getCode() == KeyCode.UP) {
                 if(game) {
-                    snake.head.direction = Direction.WEST;
+                    snake.head.direction = Direction.NORTH;
                 }else{
-                    player.direction = Direction.WEST;
+                    player.direction = Direction.NORTH;
                 }
             }else if (event.getCode() == KeyCode.DOWN) {
                 if(game) {
-                    snake.head.direction = Direction.WEST;
+                    snake.head.direction = Direction.SOUTH;
                 }else{
-                    player.direction = Direction.WEST;
+                    player.direction = Direction.SOUTH;
                 }
             }
         });
@@ -105,7 +105,7 @@ public class Main extends Application implements Commons{
             appleCnt++;
             if(appleCnt == 8) {
                 switchGames();
-            }else {
+            }else{
                 apple.move();
                 for (Segment s : snake.segments) {
                     if (s.x / GRID_SIZE == apple.x / GRID_SIZE && s.y / GRID_SIZE == apple.y / GRID_SIZE) {
@@ -120,7 +120,6 @@ public class Main extends Application implements Commons{
     }
 
     public void switchGames(){
-        game = !game;
         pellets = new Group();
         borders = new Group();
         for(int i = 0; i < grid.length; i++){
@@ -140,16 +139,18 @@ public class Main extends Application implements Commons{
                 }
             }
         }
-        objects.add(borders);
-        objects.add(pellets);
+
         player = new Pacman(snake);
         snake.setVisible(false);
         apple.setVisible(false);
-
+        objects.add(borders);
+        objects.add(pellets);
+        objects.add(player);
+        game = !game;
     }
 
     public void playPacman(){
-
+        //player.act();
     }
 
 
