@@ -15,11 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
 import javafx.scene.input.*;
 import javafx.util.Duration;
-
-import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 public class Main extends Application implements Commons{
@@ -33,6 +30,7 @@ public class Main extends Application implements Commons{
     private Apple apple;
     private int appleCnt = 0;
     private ObservableList objects;
+    private Pacman player;
     GridPane board = new GridPane();
     Group pellets = new Group();
     Group borders = new Group();
@@ -56,13 +54,29 @@ public class Main extends Application implements Commons{
 
         scene.setOnKeyPressed((KeyEvent event) -> {
             if (event.getCode() == KeyCode.LEFT) {
-                snake.head.direction = Direction.WEST;
+                if(game) {
+                    snake.head.direction = Direction.WEST;
+                }else{
+                    player.direction = Direction.WEST;
+                }
             }else if (event.getCode() == KeyCode.RIGHT) {
-                snake.head.direction = Direction.EAST;
+                if(game) {
+                    snake.head.direction = Direction.WEST;
+                }else{
+                    player.direction = Direction.WEST;
+                }
             }else if (event.getCode() == KeyCode.UP) {
-                snake.head.direction = Direction.NORTH;
+                if(game) {
+                    snake.head.direction = Direction.WEST;
+                }else{
+                    player.direction = Direction.WEST;
+                }
             }else if (event.getCode() == KeyCode.DOWN) {
-                snake.head.direction = Direction.SOUTH;
+                if(game) {
+                    snake.head.direction = Direction.WEST;
+                }else{
+                    player.direction = Direction.WEST;
+                }
             }
         });
 
@@ -86,21 +100,23 @@ public class Main extends Application implements Commons{
         if(grid[snake.head.x / GRID_SIZE][snake.head.y / GRID_SIZE] != 2){
             grid[snake.head.x / GRID_SIZE][snake.head.y / GRID_SIZE] = 1;
         }
+
         if(snake.head.x/GRID_SIZE == apple.x/GRID_SIZE && snake.head.y/GRID_SIZE == apple.y/GRID_SIZE){
-            apple.move();
-            for(Segment s : snake.segments){
-                if(s.x/GRID_SIZE == apple.x/GRID_SIZE && s.y/GRID_SIZE == apple.y/GRID_SIZE){
-                    apple.move();
-                }
-            }
-            grid[apple.x / GRID_SIZE][apple.y / GRID_SIZE] = 2;
-            snake.extend();
             appleCnt++;
+            if(appleCnt == 8) {
+                switchGames();
+            }else {
+                apple.move();
+                for (Segment s : snake.segments) {
+                    if (s.x / GRID_SIZE == apple.x / GRID_SIZE && s.y / GRID_SIZE == apple.y / GRID_SIZE) {
+                        apple.move();
+                    }
+                }
+                grid[apple.x / GRID_SIZE][apple.y / GRID_SIZE] = 2;
+                snake.extend();
+            }
         }
 
-        if(appleCnt == 8){
-            switchGames();
-        }
     }
 
     public void switchGames(){
@@ -126,7 +142,9 @@ public class Main extends Application implements Commons{
         }
         objects.add(borders);
         objects.add(pellets);
+        player = new Pacman(snake);
         snake.setVisible(false);
+        apple.setVisible(false);
 
     }
 
