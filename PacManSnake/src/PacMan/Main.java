@@ -34,9 +34,10 @@ public class Main extends Application implements Commons{
     private ObservableList pacmanObjects;
     private Pacman player;
     private int wait = 0;
-    GridPane board = new GridPane();
+//    GridPane board = new GridPane();
     Group pellets = new Group();
     Group borders = new Group();
+    Group ghosts = new Group();
     Group snakeRoot;
     Group pacmanRoot;
     Scene scene;
@@ -63,29 +64,25 @@ public class Main extends Application implements Commons{
                 if(game) {
                     snake.head.direction = Direction.WEST;
                 }else{
-                    player.direction = Direction.WEST;
-                    player.setStartAngle(180+45);
+                    player.desireDirection = Direction.WEST;
                 }
             }else if (event.getCode() == KeyCode.RIGHT) {
                 if(game) {
                     snake.head.direction = Direction.EAST;
                 }else{
-                    player.direction = Direction.EAST;
-                    player.setStartAngle(45);
+                    player.desireDirection = Direction.EAST;
                 }
             }else if (event.getCode() == KeyCode.UP) {
                 if(game) {
                     snake.head.direction = Direction.NORTH;
                 }else {
-                    player.direction = Direction.NORTH;
-                    player.setStartAngle(90+45);
+                    player.desireDirection = Direction.NORTH;
                 }
             }else if (event.getCode() == KeyCode.DOWN) {
                 if(game) {
                     snake.head.direction = Direction.SOUTH;
                 }else{
-                    player.direction = Direction.SOUTH;
-                    player.setStartAngle(270+45);
+                    player.desireDirection = Direction.SOUTH;
                 }
             }
         });
@@ -101,11 +98,7 @@ public class Main extends Application implements Commons{
         if(game){
             playSnake();
         }else{
-            if(wait == 1) {
-                playPacman();
-                wait = 0;
-            }
-            wait++;
+            playPacman();
         }
     }
 
@@ -133,6 +126,7 @@ public class Main extends Application implements Commons{
     }
 
     public void switchGames(){
+        boolean ghost = true;
         for(int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid[0].length; j++){
                 if(grid[i][j] == 0){
@@ -141,9 +135,15 @@ public class Main extends Application implements Commons{
                     borders.getChildren().add(r);
                     grid[i][j] = 4;
                 }else if(grid[i][j] == 2) {
-                    Circle c = new Circle(i*GRID_SIZE + GRID_SIZE/2,j*GRID_SIZE + GRID_SIZE/2, GRID_SIZE/3);
-                    c.setFill(Color.YELLOW);
-                    pellets.getChildren().add(c);
+                    if(!ghost) {
+                        Circle c = new Circle(i * GRID_SIZE + GRID_SIZE / 2, j * GRID_SIZE + GRID_SIZE / 2, GRID_SIZE / 3);
+                        c.setFill(Color.YELLOW);
+                        pellets.getChildren().add(c);
+                    }else{
+                        Ghost g = new Ghost(i * GRID_SIZE, j * GRID_SIZE);
+                        ghosts.getChildren().add(g.image);
+                    }
+                    ghost = !ghost;
                 }else if(grid[i][j] == 3) {
                     Rectangle r = new Rectangle(i*GRID_SIZE,j*GRID_SIZE,GRID_SIZE,GRID_SIZE);
                     r.setFill(Color.RED);
@@ -161,6 +161,7 @@ public class Main extends Application implements Commons{
         apple.setVisible(false);
         pacmanObjects.add(borders);
         pacmanObjects.add(pellets);
+        pacmanObjects.add(ghosts);
         pacmanObjects.add(player);
         scene.setRoot(pacmanRoot);
         game = !game;
