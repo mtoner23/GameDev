@@ -26,22 +26,30 @@ public class Pacman extends Arc implements Commons {
     public void act(){
         switch (this.direction) {
             case EAST:
-                if(grid[this.x/GRID_SIZE + 1][this.y/GRID_SIZE] != 0){
-                    setX(this.x - GRID_SIZE);
+                if(this.x + GRID_SIZE >= BOARD_WIDTH){
+                    //Teleport
+                }else if(grid[this.x/GRID_SIZE + 1][this.y/GRID_SIZE] != 4){
+                    setX(this.x + GRID_SIZE);
                 }
                 break;
             case WEST:
-                if(grid[this.x/GRID_SIZE - 1][this.y/GRID_SIZE] != 0){
+                if(this.x - GRID_SIZE < 0){
+                    //TELEport
+                }else if(grid[this.x/GRID_SIZE - 1][this.y/GRID_SIZE] != 4){
                     setX(this.x - GRID_SIZE);
                 }
                 break;
             case SOUTH:
-                if(grid[this.x/GRID_SIZE][this.y/GRID_SIZE + 1] != 0){
-                    setY(this.y - GRID_SIZE);
+                if(this.y + GRID_SIZE >= BOARD_HEIGHT){
+                    //TELEport
+                }else if(grid[this.x/GRID_SIZE][this.y/GRID_SIZE + 1] != 4){
+                    setY(this.y + GRID_SIZE);
                 }
                 break;
             case NORTH:
-                if(grid[this.x/GRID_SIZE][this.y/GRID_SIZE - 1] != 0){
+                if(this.y - GRID_SIZE < 0){
+                    //TELEport
+                }else if(grid[this.x/GRID_SIZE][this.y/GRID_SIZE - 1] != 4){
                     setY(this.y - GRID_SIZE);
                 }
                 break;

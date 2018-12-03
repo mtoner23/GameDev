@@ -8,7 +8,7 @@ public interface Commons {
     int BOARD_HEIGHT = GRID_SIZE*GRID_HEIGHT;
     int BORDER_RIGHT = 0;
     int BORDER_LEFT = 0;
-    int INIT_LENGTH = 20;
+    int INIT_LENGTH = 16;
     int SEGMENT_HEIGHT = GRID_SIZE;
     int SEGMENT_WIDTH = GRID_SIZE;
     int SHOT_SPEED = 9;

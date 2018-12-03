@@ -10,7 +10,7 @@ public class Snake extends Group implements Commons {
     public int size;
 
     public Snake(){
-        this(INIT_LENGTH,BOARD_WIDTH/2 + (INIT_LENGTH/2)*GRID_SIZE,BOARD_HEIGHT/2);
+        this(INIT_LENGTH,BOARD_WIDTH/2 - (INIT_LENGTH/2)*GRID_SIZE,BOARD_HEIGHT/2);
     };
 
     public Snake(int s, int x, int y){
@@ -21,6 +21,7 @@ public class Snake extends Group implements Commons {
 
         for(int i = 0; i < s; i++) {
             seg = new Segment(x, y,i == s-1);
+            grid[x/GRID_SIZE][y/GRID_SIZE] = 1;
             this.getChildren().add(seg);
             segments.add(seg);
             x += SEGMENT_WIDTH;
@@ -60,13 +61,21 @@ public class Snake extends Group implements Commons {
         }
 
         if (head.x >= BOARD_WIDTH - BORDER_RIGHT) {
+            grid[head.x/GRID_SIZE - 1][head.y/GRID_SIZE] = 3;
             head.setX(0);
+            grid[head.x/GRID_SIZE][head.y/GRID_SIZE] = 3;
         } else if (head.x < BORDER_LEFT) {
+            grid[head.x/GRID_SIZE + 1][head.y/GRID_SIZE] = 3;
             head.setX(BOARD_WIDTH - GRID_SIZE);
+            grid[head.x/GRID_SIZE][head.y/GRID_SIZE] = 3;
         } else if (head.y >= BOARD_HEIGHT) {
+            grid[head.x/GRID_SIZE][head.y/GRID_SIZE - 1] = 3;
             head.setY(0);
+            grid[head.x/GRID_SIZE][head.y/GRID_SIZE] = 3;
         } else if (head.y < 0) {
+            grid[head.x/GRID_SIZE][head.y/GRID_SIZE + 1] = 3;
             head.setY(BOARD_HEIGHT - GRID_SIZE);
+            grid[head.x/GRID_SIZE][head.y/GRID_SIZE] = 3;
         }
     }
 
