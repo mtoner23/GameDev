@@ -11,8 +11,8 @@ public class Apple extends Circle implements Commons{
 
     public Apple(){
         r = new Random();
-        this.x = r.nextInt(GRID_WIDTH) * GRID_SIZE;
-        this.y = r.nextInt(GRID_HEIGHT) * GRID_SIZE;
+        this.x = (r.nextInt(GRID_WIDTH - 2) + 1) * GRID_SIZE;
+        this.y = (r.nextInt(GRID_HEIGHT - 2) + 1) * GRID_SIZE;
         super.setCenterX(this.x + GRID_SIZE/2);
         super.setCenterY(this.y + GRID_SIZE/2);
         super.setRadius(GRID_SIZE/2);
@@ -20,8 +20,8 @@ public class Apple extends Circle implements Commons{
     }
 
     public void move(){
-        this.x = r.nextInt(GRID_WIDTH) * GRID_SIZE;
-        this.y = r.nextInt(GRID_HEIGHT) * GRID_SIZE;
+        this.x = (r.nextInt(GRID_WIDTH - 2) + 1) * GRID_SIZE;
+        this.y = (r.nextInt(GRID_HEIGHT - 2) + 1) * GRID_SIZE;
         super.setCenterX(this.x + GRID_SIZE/2);
         super.setCenterY(this.y + GRID_SIZE/2);
     }

@@ -12,7 +12,7 @@ public class Pacman extends Arc implements Commons {
     public Pacman(Snake s){
         this.x = s.head.x;
         this.y = s.head.y;
-        this.speed = 5;
+        this.speed = GRID_SIZE/2;
         this.direction = s.head.direction;
         this.desireDirection = this.direction;
         this.setCenterX(this.x + GRID_SIZE/2);

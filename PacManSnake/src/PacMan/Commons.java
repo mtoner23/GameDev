@@ -1,9 +1,9 @@
 package PacMan;
 
 public interface Commons {
-    int GRID_SIZE = 10;
-    int GRID_WIDTH = 20;
-    int GRID_HEIGHT = 20;
+    int GRID_SIZE = 16;
+    int GRID_WIDTH = 30;
+    int GRID_HEIGHT = 30;
     int BOARD_WIDTH = GRID_SIZE*GRID_WIDTH;
     int BOARD_HEIGHT = GRID_SIZE*GRID_HEIGHT;
     int BORDER_RIGHT = 0;
