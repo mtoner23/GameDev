@@ -42,72 +42,96 @@ public class Pacman extends Arc implements Commons {
                     break;
             }
         }else{
-            switch (this.desireDirection) {
-                case EAST:
-                    if (this.x + GRID_SIZE >= BOARD_WIDTH) {
-                        //Teleport
-                    } else if (grid[this.x / GRID_SIZE + 1][this.y / GRID_SIZE] != 4) {
-                        this.direction = Direction.EAST;
-                        this.setStartAngle(45);
-                    }
-                    break;
-                case WEST:
-                    if (this.x - GRID_SIZE < 0) {
-                        //TELEport
-                    } else if (grid[this.x / GRID_SIZE - 1][this.y / GRID_SIZE] != 4) {
-                        this.direction = Direction.WEST;
-                        this.setStartAngle(180+45);
-                    }
-                    break;
-                case SOUTH:
-                    if (this.y + GRID_SIZE >= BOARD_HEIGHT) {
-                        //TELEport
-                    } else if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE + 1] != 4) {
-                        this.direction = Direction.SOUTH;
-                        this.setStartAngle(270+45);
-                    }
-                    break;
-                case NORTH:
-                    if (this.y - GRID_SIZE < 0) {
-                        //TELEport
-                    } else if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE - 1] != 4) {
-                        this.direction = Direction.NORTH;
-                        this.setStartAngle(90+45);
-                    }
-                    break;
+            if(this.desireDirection != this.direction) {
+                switch (this.desireDirection) {
+                    case EAST:
+                        if (this.x + GRID_SIZE >= BOARD_WIDTH) {
+                            if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE] == 3) {
+                                this.direction = Direction.EAST;
+                                this.setStartAngle(45);
+                            }
+                        } else if (grid[this.x / GRID_SIZE + 1][this.y / GRID_SIZE] != 4) {
+                            this.direction = Direction.EAST;
+                            this.setStartAngle(45);
+                        }
+                        break;
+                    case WEST:
+                        if (this.x - GRID_SIZE < 0) {
+                            if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE] == 3) {
+                                this.direction = Direction.WEST;
+                                this.setStartAngle(180 + 45);
+                            }
+                        } else if (grid[this.x / GRID_SIZE - 1][this.y / GRID_SIZE] != 4) {
+                            this.direction = Direction.WEST;
+                            this.setStartAngle(180 + 45);
+                        }
+                        break;
+                    case SOUTH:
+                        if (this.y + GRID_SIZE >= BOARD_HEIGHT) {
+                            if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE] == 3) {
+                                this.direction = Direction.SOUTH;
+                                this.setStartAngle(1270 + 45);
+                            }
+                        } else if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE + 1] != 4) {
+                            this.direction = Direction.SOUTH;
+                            this.setStartAngle(270 + 45);
+                        }
+                        break;
+                    case NORTH:
+                        if (this.y - GRID_SIZE < 0) {
+                            if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE] == 3) {
+                                this.direction = Direction.NORTH;
+                                this.setStartAngle(90 + 45);
+                            }
+                        } else if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE - 1] != 4) {
+                            this.direction = Direction.NORTH;
+                            this.setStartAngle(90 + 45);
+                        }
+                        break;
+                }
             }
 
             switch (this.direction) {
                 case EAST:
                     if (this.x + GRID_SIZE >= BOARD_WIDTH) {
-                        //Teleport
+                        if(grid[this.x/GRID_SIZE][this.y/GRID_SIZE] == 3){
+                            setX(0);
+                        }
                     } else if (grid[this.x / GRID_SIZE + 1][this.y / GRID_SIZE] != 4) {
                         setX(this.x + speed);
                     }
                     break;
                 case WEST:
                     if (this.x - GRID_SIZE < 0) {
-                        //TELEport
+                        if(grid[this.x/GRID_SIZE][this.y/GRID_SIZE] == 3){
+                            setX(BOARD_WIDTH - GRID_SIZE);
+                        }
                     } else if (grid[this.x / GRID_SIZE - 1][this.y / GRID_SIZE] != 4) {
                         setX(this.x - speed);
                     }
                     break;
                 case SOUTH:
                     if (this.y + GRID_SIZE >= BOARD_HEIGHT) {
-                        //TELEport
-                    } else if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE + 1] != 4) {
+                        if(grid[this.x/GRID_SIZE][this.y/GRID_SIZE] == 3){
+                            setY(0);
+                        }                    } else if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE + 1] != 4) {
                         setY(this.y + speed);
                     }
                     break;
                 case NORTH:
                     if (this.y - GRID_SIZE < 0) {
-                        //TELEport
-                    } else if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE - 1] != 4) {
+                        if(grid[this.x/GRID_SIZE][this.y/GRID_SIZE] == 3){
+                            setY(BOARD_HEIGHT - GRID_SIZE);
+                        }                    } else if (grid[this.x / GRID_SIZE][this.y / GRID_SIZE - 1] != 4) {
                         setY(this.y - speed);
                     }
                     break;
             }
         }
+    }
+
+    public void setDirection(Direction d){
+
     }
 
     public void setX(int x){

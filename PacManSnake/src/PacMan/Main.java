@@ -134,10 +134,10 @@ public class Main extends Application implements Commons{
         Rectangle edgeLeft = new Rectangle(-GRID_SIZE,0,GRID_SIZE,BOARD_HEIGHT);
         Rectangle edgeRight = new Rectangle(BOARD_WIDTH,0,GRID_SIZE,BOARD_HEIGHT);
 
-        edgeTop.setFill(Color.ORANGE);
-        edgeBottom.setFill(Color.ORANGE);
-        edgeLeft.setFill(Color.ORANGE);
-        edgeRight.setFill(Color.ORANGE);
+        edgeTop.setFill(Color.BLUE);
+        edgeBottom.setFill(Color.BLUE);
+        edgeLeft.setFill(Color.BLUE);
+        edgeRight.setFill(Color.BLUE);
 
         borders.getChildren().addAll(edgeTop,edgeBottom,edgeLeft,edgeRight);
 
@@ -168,6 +168,8 @@ public class Main extends Application implements Commons{
                     Circle c = new Circle(i * GRID_SIZE + GRID_SIZE / 2, j * GRID_SIZE + GRID_SIZE / 2, GRID_SIZE / 6);
                     c.setFill(Color.YELLOW);
                     pellets.getChildren().add(c);
+
+
                 }else{
                     Circle c = new Circle(i*GRID_SIZE + GRID_SIZE/2,j*GRID_SIZE + GRID_SIZE/2, GRID_SIZE/6);
                     c.setFill(Color.YELLOW);
@@ -199,7 +201,7 @@ public class Main extends Application implements Commons{
                 grid[player.x/GRID_SIZE][player.y/GRID_SIZE] = 0;
                 removePellet(player.x, player.y);
             }else if(grid[player.x/GRID_SIZE][player.y/GRID_SIZE] == 3){
-
+                removePellet(player.x, player.y);
             }
         }
     }

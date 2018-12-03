@@ -60,11 +60,11 @@ public class Snake extends Group implements Commons {
                 break;
         }
 
-        if (head.x >= BOARD_WIDTH - BORDER_RIGHT) {
+        if (head.x >= BOARD_WIDTH) {
             grid[head.x/GRID_SIZE - 1][head.y/GRID_SIZE] = 3;
             head.setX(0);
             grid[head.x/GRID_SIZE][head.y/GRID_SIZE] = 3;
-        } else if (head.x < BORDER_LEFT) {
+        } else if (head.x < 0) {
             grid[head.x/GRID_SIZE + 1][head.y/GRID_SIZE] = 3;
             head.setX(BOARD_WIDTH - GRID_SIZE);
             grid[head.x/GRID_SIZE][head.y/GRID_SIZE] = 3;
