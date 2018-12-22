@@ -140,6 +140,7 @@ public class Main extends Application implements Commons{
         edgeRight.setFill(Color.BLUE);
 
         borders.getChildren().addAll(edgeTop,edgeBottom,edgeLeft,edgeRight);
+        player = new Pacman(snake);
 
         for(int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid[0].length; j++){
@@ -156,7 +157,9 @@ public class Main extends Application implements Commons{
                         grid[i][j] = 5;
                     }else{
                         Ghost g = new Ghost(i * GRID_SIZE, j * GRID_SIZE);
-                        ghosts.getChildren().add(g.image);
+                        System.out.print(player.x);
+                        g.setTarget(player.x,player.y);
+                        ghosts.getChildren().add(g);
                         grid[i][j] = 6;
                     }
                     ghost = !ghost;
@@ -178,7 +181,7 @@ public class Main extends Application implements Commons{
             }
         }
 
-        player = new Pacman(snake);
+
         snake.setVisible(false);
         apple.setVisible(false);
         pacmanObjects.add(borders);
@@ -193,6 +196,12 @@ public class Main extends Application implements Commons{
 
     public void playPacman(Stage primaryStage){
         player.act();
+        for(int i = 0; i < ghosts.getChildren().size(); i++){
+            Ghost g = (Ghost) ghosts.getChildren().get(i);
+            g.act();
+            g.setTarget(player.x,player.y);
+        }
+
         if(player.x % GRID_SIZE == 0 && player.y % GRID_SIZE == 0){
             if(grid[player.x/GRID_SIZE][player.y/GRID_SIZE] == 1){
                 grid[player.x/GRID_SIZE][player.y/GRID_SIZE] = 0;
