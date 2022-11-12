@@ -5,6 +5,8 @@ import javafx.scene.image.ImageView;
 
 import java.awt.*;
 
+import java.lang.Math;
+
 public class Ghost extends ImageView implements Commons{
 
     public Image redGhost = new Image("pacmanGhost.png");
@@ -45,35 +47,65 @@ public class Ghost extends ImageView implements Commons{
             }
         }else {
             int edges = 0;
-            edges += grid[x/GRID_SIZE + 1][y/GRID_SIZE];
-            edges += grid[x/GRID_SIZE - 1][y/GRID_SIZE];
-            edges += grid[x/GRID_SIZE][y/GRID_SIZE + 1];
-            edges += grid[x/GRID_SIZE][y/GRID_SIZE - 1];
+            edges += grid[x/GRID_SIZE + 1][y/GRID_SIZE] != 0 ? 1:0;
+            edges += grid[x/GRID_SIZE - 1][y/GRID_SIZE] != 0 ? 1:0;
+            edges += grid[x/GRID_SIZE][y/GRID_SIZE + 1] != 0 ? 1:0;
+            edges += grid[x/GRID_SIZE][y/GRID_SIZE - 1] != 0 ? 1:0;
             if(edges > 2){
-
-            }else{
-                switch (this.direction) {
-                    case EAST:
-                        setX(this.x + speed);
-                        break;
-                    case WEST:
-                        setX(this.x - speed);
-                        break;
-                    case NORTH:
-                        setY(this.y - speed);
-                        break;
-                    case SOUTH:
-                        setY(this.y + speed);
-                        break;
-                }
+                setDirection();
             }
-
+            switch (this.direction) {
+                case EAST:
+                    setX(this.x + speed);
+                    break;
+                case WEST:
+                    setX(this.x - speed);
+                    break;
+                case NORTH:
+                    setY(this.y - speed);
+                    break;
+                case SOUTH:
+                    setY(this.y + speed);
+                    break;
+            }
         }
     }
 
     public void setDirection(){
-        //Calculates what direction to move based on the target tile
-
+        //Calculates what direction to move based on the manhattan distance between
+        // possible paths and target tile
+        Direction bestDir = Direction.NORTH;
+        int dist;
+        int bestDist = BOARD_HEIGHT * 10; //initialize to super high value
+        if(x + GRID_SIZE < BOARD_WIDTH && grid[x/GRID_SIZE + 1][y/GRID_SIZE] != 4){
+            dist = Math.abs(target.x - (this.x + GRID_SIZE)) + Math.abs(target.y - this.y);
+            if(dist < bestDist){
+                bestDist = dist;
+                bestDir = Direction.EAST;
+            }
+        }
+        if(x - GRID_SIZE < 0 && grid[x/GRID_SIZE - 1][y/GRID_SIZE] != 4){
+            dist = Math.abs(target.x - (this.x - GRID_SIZE)) + Math.abs(target.y - this.y);
+            if(dist < bestDist){
+                bestDist = dist;
+                bestDir = Direction.WEST;
+            }
+        }
+        if(y + GRID_SIZE < BOARD_HEIGHT && grid[x/GRID_SIZE][y/GRID_SIZE + 1] != 4){
+            dist = Math.abs(target.x - this.x) + Math.abs(target.y - (this.y + GRID_SIZE));
+            if(dist < bestDist){
+                bestDist = dist;
+                bestDir = Direction.SOUTH;
+            }
+        }
+        if(y - GRID_SIZE < 0 && grid[x/GRID_SIZE][y/GRID_SIZE - 1] != 4){
+            dist = Math.abs(target.x - this.x) + Math.abs(target.y - (this.y - GRID_SIZE));
+            if(dist < bestDist){
+                bestDist = dist;
+                bestDir = Direction.NORTH;
+            }
+        }
+        this.direction = bestDir;
     }
 
     public void setX(int x){

@@ -18,9 +18,11 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.scene.input.*;
 import javafx.util.Duration;
+
+import java.applet.Applet;
 import java.util.concurrent.TimeUnit;
 
-public class Main extends Application implements Commons{
+public class Main extends javafx.stage.Stage implements Commons{
 
     private boolean ingame;
     private boolean pause = false;
@@ -112,6 +114,7 @@ public class Main extends Application implements Commons{
         if(snake.head.x/GRID_SIZE == apple.x/GRID_SIZE && snake.head.y/GRID_SIZE == apple.y/GRID_SIZE){
             appleCnt++;
             if(appleCnt == 5) {
+                grid[snake.head.x/GRID_SIZE][snake.head.y/GRID_SIZE] = 1;
                 switchGames(primaryStage);
             }else{
                 apple.move();
